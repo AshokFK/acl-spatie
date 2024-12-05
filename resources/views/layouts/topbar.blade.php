@@ -10,11 +10,9 @@
                 </svg>
                 <span class="sr-only">Toggle sidebar</span>
             </button>
-            <a href="/index.html" class="flex items-center justify-between mr-4">
-                <svg viewBox="0 0 125 100" xmlns="http://www.w3.org/2000/svg" class="h-8 mr-2">
-                    <path d="M119.58,0H3.32C1.49,0,0,1.49,0,3.32v94.66c0,1.83,1.49,3.32,3.32,3.32h116.26c1.83,0,3.32-1.49,3.32-3.32V3.32c0-1.83-1.49-3.32-3.32-3.32ZM73.39,92.76c0,1.19-.97,2.16-2.16,2.16h-37.8c-1.19,0-2.16-.97-2.16-2.16v-25.56c0-1.19.97-2.16,2.16-2.16h37.8c1.19,0,2.16.97,2.16,2.16v25.56ZM119.39,61.26c0,1.19-.97,2.16-2.16,2.16H5.81c-1.19,0-2.16-.97-2.16-2.16v-18.76c0-1.19.97-2.16,2.16-2.16h111.42c1.19,0,2.16.97,2.16,2.16v18.76ZM119.39,26.35c0,1.21-.97,2.19-2.16,2.19h-43.84v8.48c0,1.21-.97,2.19-2.16,2.19h-37.8c-1.19,0-2.16-.98-2.16-2.19V11.09c0-.25.05-.48.12-.7.6-3.25,3.41-5.71,6.79-5.71h79.05c1.19,0,2.16.98,2.16,2.19v19.48Z"></path>
-                </svg>
-                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">System App</span>
+            <a href="{{ route('dashboard') }}" class="flex items-center justify-between mr-4">
+                <x-application-logo class="h-8 mr-2" />
+                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">{{ config('app.name', 'Laravel') }}</span>
             </a>
             <form action="#" method="GET" class="hidden md:block md:pl-2">
                 <label for="topbar-search" class="sr-only">Search</label>
@@ -266,7 +264,7 @@
             <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName" class="flex mx-2 items-center text-sm pe-1 font-medium text-gray-900 rounded-full hover:text-blue-600 dark:hover:text-blue-500 md:me-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white" type="button">
                 <span class="sr-only">Open user menu</span>
                 <img class="w-8 h-8 me-2 rounded-full" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gough.png" alt="user photo" />
-                Bonnie Green
+                {{ Auth()->user()->name }}
                 <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
                 </svg>
@@ -289,8 +287,16 @@
                     </li>
                 </ul>
                 <div class="py-2">
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign
-                        out</a>
+                    <!-- Authentication -->
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+
+                        <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                            {{ __('Log Out') }}
+                        </x-responsive-nav-link>
+                    </form>
+                    {{-- <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a> --}}
                 </div>
             </div>
 
