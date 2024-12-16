@@ -1,6 +1,8 @@
 <x-main-layout>
     <h2 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl md:mb-6 border-b pb-2">{{ __('Roles') }}</h2>
 
+    <x-alert />
+
     <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
 
         <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
@@ -34,9 +36,7 @@
                         <th scope="col" class="px-4 py-3">Role name</th>
                         <th scope="col" class="px-4 py-3">Guard</th>
                         <th scope="col" class="px-4 py-3">Description</th>
-                        <th scope="col" class="px-4 py-3">
-                            <span class="sr-only">Actions</span>
-                        </th>
+                        <th scope="col" class="px-4 py-3 flex items-center justify-end">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,8 +46,12 @@
                         <td class="px-4 py-3">{{ $role->guard_name }}</td>
                         <td class="px-4 py-3">{{ $role->description }}</td>
                         <td class="px-4 py-3 flex items-center justify-end">
-                            <a href="#" class="px-2 font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                            <a href="#" class="px-2 font-medium text-red-600 dark:text-red-500 hover:underline">Remove</a>
+                            <x-link-button href="{{ route('roles.edit', $role) }}" class="text-white bg-primary-500 hover:bg-primary-600 mx-2">Edit</x-link-button>
+                            <form method="POST" class="inline-block" action="{{ route('roles.destroy', $role) }}" onsubmit="return confirm('Are you sure?')">
+                                @method('DELETE')
+                                @csrf
+                                <x-danger-button>Delete</x-danger-button>
+                            </form>
                         </td>
                     </tr>
                     @empty

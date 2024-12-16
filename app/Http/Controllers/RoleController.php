@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Alert;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Models\Role;
@@ -31,7 +32,8 @@ class RoleController extends Controller
     public function store(StoreRoleRequest $request)
     {
         Role::create($request->all());
-        return redirect()->route("roles.index")->with("success","created successfully");
+        Alert::flash('success', 'Created successfully');
+        return redirect()->route("roles.index");
     }
 
     /**
@@ -47,8 +49,10 @@ class RoleController extends Controller
      */
     public function update(UpdateRoleRequest $request, Role $role)
     {
-        $role->update( $request->all());
-        return redirect()->route('roles.index')->with('success','updated successfully');
+        $role->update($request->all());
+
+        Alert::flash('success', 'Updated successfully');
+        return redirect()->route('roles.index');
     }
 
     /**
@@ -57,6 +61,7 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         $role->delete();
-        return redirect()->route('roles.index')->with('success','deleted successfully');
+        Alert::flash('success', 'Deleted successfully');
+        return redirect()->route('roles.index');
     }
 }
