@@ -23,7 +23,7 @@ class UpdatePermissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'min:5', Rule::unique('permissions')->ignore($this->role->id)],
+            'name' => ['required', 'string', 'min:5', Rule::unique('permissions')->ignore($this->permission->id)],
         ];
     }
 }
